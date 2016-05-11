@@ -1,7 +1,7 @@
 #ifndef __CONTAINER_H__
 #define __CONTAINER_H__
 
-#include "Enivronment.h"
+#include "Environment.h"
 
 class IContainer
 {
@@ -9,7 +9,7 @@ class IContainer
 	  IContainer();
 	  virtual ~IContainer();
 
-	  const Enivronment& getEnvironment() const;
+	  const Environment& getEnvironment() const;
 	  size_t getSize() const;
 
 	protected:

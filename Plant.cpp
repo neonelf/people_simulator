@@ -1,32 +1,51 @@
+#include <stdlib.h>
+#include <stdio.h>
+
 #include "Plant.h"
+#include "Environment.h"
 
 
 Plant::Plant()
 {
-	m_LightExposure = 0;
+	m_pCurEnvironment = NULL;
+	m_LightExposureAccumulator = 0;
+	m_LightExposurePrevious = 0;
 	m_bPrevReadWasDark = true;
 }
 
 Plant::~Plant() {}
 
-const Plant& operator=(const PLant& rhs)
-{
-	m_LightExposure = rhs.m_LightExposure;
-	m_bPrevReadWasDark = rhs.m_bPrevReadWasDark;
-	
-
-	return *this;
-
-}
 
 void Plant::Tick(size_t DeltaTimeSeconds)
 {
+	uint8_t LightReading = 0;
 	//get light reading from leaf container 
-	//if (is currently light)
-		//if Prev read was dark  
-		//reset to 0
-	  //_add Delta time to m_LightExposure
+	if (m_pCurEnvironment)
+	{
+		LightReading = m_pCurEnvironment->GetCurLightLevel();
+		if (LightReading > 0)
+		{
+			if (m_bPrevReadWasDark)
+			{
+			  m_LightExposurePrevious = m_LightExposureAccumulator;
+			  m_LightExposureAccumulator = 0; //reset for a new day
+			}
+			m_LightExposureAccumulator += LightReading * DeltaTimeSeconds;
+		}
+		else
+		{
+			//reading was 0 remember that.
+			m_bPrevReadWasDark = true;
+		}
+	}
+}
 
-
+void Plant::Put(Environment &WhereIAm)
+{
+	m_pCurEnvironment = &WhereIAm;
 }
  
+void Plant::DebugPrint()
+{
+	printf("Plant \n");
+}
