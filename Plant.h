@@ -6,6 +6,10 @@
 //forward decel
 class Environment;
 
+
+//CO + Water + Light Energy = Glucose + Oxygen + Water
+//grass = .623 gallons per sqft per week
+
 class Plant : public ITickable
 {
 	public:

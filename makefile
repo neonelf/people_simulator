@@ -1,9 +1,9 @@
 CC=gcc
 CXX=g++
 RM=rm -f
-CPPFLAGS=  -std=c++11 -g $(shell root-config --cflags)
-LDFLAGS=-g $(shell root-config --ldflags)
-LDLIBS=$(shell root-config --libs)
+CPPFLAGS= -std=c++11 
+LDFLAGS=
+LDLIBS=
 
 SRCS=$(wildcard *.cpp)
 OBJS=$(subst .cpp,.o,$(SRCS))
@@ -23,7 +23,7 @@ clean:
 	$(RM) $(OBJS)
 
 %.o : %.cpp
-	$(CXX) $(CPPFLAGS) $< -o $@
+	$(CXX) $(CPPFLAGS) -c $< -o $@
 
 include .depend
 

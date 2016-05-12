@@ -31,6 +31,7 @@ void Plant::Tick(size_t DeltaTimeSeconds)
 			  m_LightExposureAccumulator = 0; //reset for a new day
 			}
 			m_LightExposureAccumulator += LightReading * DeltaTimeSeconds;
+			m_bPrevReadWasDark = false;
 		}
 		else
 		{
@@ -47,5 +48,5 @@ void Plant::Put(Environment &WhereIAm)
  
 void Plant::DebugPrint()
 {
-	printf("Plant \n");
+	printf("Plant Light Exp: %d | PrevLight: %d\n", m_LightExposureAccumulator, m_LightExposurePrevious);
 }

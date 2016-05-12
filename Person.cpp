@@ -8,7 +8,7 @@ Person::Person()
 
 Person::~Person() {}
 
-const Person& operator=(const Person& rhs)
+const Person& Person::operator=(const Person& rhs)
 {
 	
 	m_Hunger = rhs.m_Hunger;

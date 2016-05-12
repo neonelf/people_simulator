@@ -1,7 +1,7 @@
-
+#include <stdio.h>
 #include "Environment.h"
 
-static const scSecondsPerDay = 86400;
+static const int scSecondsPerDay = 86400;
 
 Environment::Environment()
 {
@@ -21,10 +21,10 @@ void Environment::Tick(size_t DeltaTimeSeconds)
 	}
 }
 
-void Environment::SetLightLevl(int Level, int length_seconds)
+void Environment::SetLightLevel(int Level, int length_hours)
 {
 	m_LightLevel = Level;
-	m_secondsOfLightMax = length_seconds;
+	m_secondsOfLightMax = length_hours *60 *60;
 }
 
 uint8_t Environment::GetCurLightLevel()
@@ -37,5 +37,5 @@ uint8_t Environment::GetCurLightLevel()
 
 void Environment::DebugPrint()
 {
-	printf("Environment time: %d, curLight: %d\n",m_secondsTotalElapsed, GetCurLightLevel);
+	printf("Environment time: %d, curLight: %d\n",m_secondsTotalElapsed, GetCurLightLevel());
 }

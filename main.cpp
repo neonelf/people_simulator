@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <vector>
-#include "Wilderness.h"
+#include "Environment.h"
+#include "Plant.h"
 
 using namespace std;
 
@@ -9,13 +10,13 @@ int main(int argc, char** argv)
 {
     //create the outside 
 	Environment Outside;
-	Outside.LightLevel(100,8);  //100% 6am-8pm
+	Outside.SetLightLevel(100,8);  //100% 6am-8pm
 	Plant Flower;
 	Flower.Put(Outside);
 
-	for (int i=0; i < 100; ++i)
+	for (int i=0; i < 200; ++i)
 	{
-	  size_t DeltaTime = 864;
+	  size_t DeltaTime = 800;
 	  Outside.Tick(DeltaTime);
 	  Flower.Tick(DeltaTime);
       //debug
