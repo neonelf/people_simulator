@@ -1,0 +1,19 @@
+#ifndef __ELEMENTS_H__
+#define __ELEMENTS_H__
+
+enum Elements {
+	CARBON = 0, 
+	HYDROGEN,
+	OXYGEN,
+	NITROGEN,
+	PHOSPHORUS,
+	WATER,
+	ENERGY,
+	CARBON_DIOXIDE,
+
+	MAX_ELEMENTS
+	};
+
+
+
+#endif // __ELEMENTS_H__

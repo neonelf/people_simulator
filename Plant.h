@@ -2,6 +2,7 @@
 #define __PLANT_H__
 
 #include "Tickable.h"
+#include "Elements.h"
 
 //forward decel
 class Environment;
@@ -29,7 +30,9 @@ class Plant : public ITickable
 		unsigned int m_LightExposureAccumulator; //reset at transition from dark->light
 		unsigned int m_LightExposurePrevious;
 		bool m_bPrevReadWasDark;
+		unsigned int m_myElements[MAX_ELEMENTS];
 
+		unsigned int m_Energy;
 		Environment *m_pCurEnvironment;
 
 };
