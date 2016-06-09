@@ -5,13 +5,17 @@ CPPFLAGS= -std=c++11
 LDFLAGS=
 LDLIBS=
 
-SRCS=$(wildcard *.cpp)
-OBJS=$(subst .cpp,.o,$(SRCS))
+SRCS:=$(filter-out main.cpp, $(wildcard *.cpp))
+SRCS:=$(filter-out maptest.cpp, $(SRCS))
+OBJS:=$(subst .cpp,.o,$(SRCS))
 
-all: people_simulator
+all: people_simulator map_test
 
-people_simulator: $(OBJS)
-	$(CXX) $(LDFLAGS) -o peopleSim $(OBJS) $(LDLIBS)
+map_test: $(OBS) maptest.o
+	$(CXX) $(LDFLAGS) -o maptest $(OBJS) maptest.o $(LDLIBS)
+
+people_simulator: $(OBJS) main.o
+	$(CXX) $(LDFLAGS) -o peopleSim $(OBJS) main.o $(LDLIBS)
 
 depend: .depend
 
@@ -20,7 +24,7 @@ depend: .depend
 	$(CXX) $(CPPFLAGS) -MM $^>>./.depend;
 
 clean:
-	$(RM) $(OBJS)
+	$(RM) $(OBJS) main.o maptest.o
 
 %.o : %.cpp
 	$(CXX) $(CPPFLAGS) -c $< -o $@

@@ -21,7 +21,11 @@ class Plant : public ITickable
 		//inherited from ITickable
 		virtual void Tick(size_t DeltaTimeSeconds);
 
+		//init functions
 		void Put(Environment &WhereIAm);
+		//action functions
+		void Eat(size_t DeltaSeconds);
+		void Think();
 
 		//Debug
 		void DebugPrint();

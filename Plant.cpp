@@ -50,7 +50,7 @@ void Plant::Tick(size_t DeltaTimeSeconds)
 	Think();
 }
 
-void Eat(size_t DeltaSeconds)
+void Plant::Eat(size_t DeltaSeconds)
 {
     //calculate max draw based on need, root system. Attempt to draw max
 	//draw elements from environment
@@ -59,7 +59,7 @@ void Eat(size_t DeltaSeconds)
 	
 }
 
-void Think()
+void Plant::Think()
 {
 }
 
