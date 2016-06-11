@@ -16,7 +16,7 @@ int main(int argc, char** argv)
 
 	for (int i=0; i < 200; ++i)
 	{
-	  size_t DeltaTime = 800;
+	  Timespan DeltaTime = Timespan::FromMiliseconds(800000);
 	  Outside.Tick(DeltaTime);
 	  Flower.Tick(DeltaTime);
       //debug

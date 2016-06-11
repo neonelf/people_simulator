@@ -1,14 +1,14 @@
 #ifndef __TICKABLE_H__
 #define __TICKABLE_H__
 
-#include <cstddef>
+#include "Timespan.h"
 
 class ITickable
 {
 	public:
 	  ITickable() {}
 	  virtual ~ITickable() {}
-	  virtual void Tick(size_t DeltaTimeSeconds)=0;
+	  virtual void Tick(const Timespan& Delta)=0;
 }; 
 
 

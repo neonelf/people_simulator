@@ -10,8 +10,11 @@ enum EventDataType
   SIGHT =  0x02 
 };
 
-typedef struct _MapLocation
+typedef struct _MapLocation 
 {
+	int x;
+	int y;
+
 } MapLocation;
 
 struct MapEventData

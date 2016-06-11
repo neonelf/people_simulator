@@ -11,7 +11,7 @@ class Environment : public ITickable
 		~Environment() {}
 		
 		//inherited 
-		virtual void Tick(size_t DeltaTimeSeconds);
+		virtual void Tick(const Timespan&  Delta);
 		
 		void SetLightLevel(int Level, int length_hours);
 		uint8_t GetCurLightLevel();
@@ -22,7 +22,7 @@ class Environment : public ITickable
 	protected:
 		int m_LightLevel;
 		int m_secondsOfLightMax;
-		int m_secondsTotalElapsed;
+		Timespan  m_TotalElapsedTime;
 };
 
 
