@@ -1,11 +1,20 @@
 #include <stdio.h>
 #include "Bugg.h"
 #include <memory.h>
-
+#include <stdlib.h>
 
 const uint64_t FirstByte =  0x00000000000000FF;
 const uint64_t SecondByte = 0x000000000000FF00;
 
+
+Bugg::Bugg(int BrainSize):  m_Brain(BrainSize)
+{
+	for (int i=0; i < BrainSize; ++i)
+	{
+		m_Brain[i] = rand() % 256;	
+	}
+	m_BrainRead = 0;
+}
 
 void Bugg::RecieveUpdate(const MapEventData &eventData) 
 {
@@ -14,6 +23,8 @@ void Bugg::RecieveUpdate(const MapEventData &eventData)
 
 void Bugg::Move(uint8_t Direction)
 {
+	Direction %= 4;
+	printf("Bugg:Move dir: %d", Direction);
 	switch (Direction)
 	{
 		case 1:	m_curLocation.x++;
@@ -28,25 +39,25 @@ void Bugg::Move(uint8_t Direction)
 
 }
 
-uint64_t Think()
+uint64_t Bugg::Think()
 {
   uint64_t retvalue;
-  void* pbuf = malloc(sizeof(retvalue));	
-  memcpy (&retvalue, pbuf, sizeof(retvalue));
-  free(pbuf);
-
+  ::memcpy(&retvalue, &m_Brain[m_BrainRead], sizeof(retvalue));
+  m_BrainRead += sizeof(retvalue);
+	printf("Bugg::Think() returning 0x%lX",retvalue);
   return retvalue;
 }
 
 void Bugg::TakeAction(uint64_t action)
 {
-	const uint8_t Max_action = 1;
-	
-	uint8_t curAction = (action|FirstByte) % Max_action;
+	const uint8_t Max_action = 2;
+		
+	uint8_t curAction = (action&FirstByte) % Max_action;
+	printf("Bugg::TakeAction() action:%d",curAction);
 	switch (curAction)
 	{
 		case 1:
-			Move(FirstByte|(action>>4));
+			Move(0x07&(action>>4));
 			break;
 
 		default:

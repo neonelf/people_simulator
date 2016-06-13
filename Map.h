@@ -3,6 +3,9 @@
 
 #include "Registry.h"
 
+//forward
+class Surface;
+ 
 enum EventDataType
 {
   SMELL =  0x00,
@@ -29,7 +32,7 @@ class GameMap : public IRegistry
 {
 	public:
 		void MapEvent(const struct MapEventData& evtData);
-
+		void Draw(Surface& a);
 		
 };
 
