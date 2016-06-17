@@ -9,9 +9,9 @@ SRCS:=$(filter-out main.cpp, $(wildcard *.cpp))
 SRCS:=$(filter-out maptest.cpp, $(SRCS))
 OBJS:=$(subst .cpp,.o,$(SRCS))
 
-all: people_simulator map_test
+all: map_test
 
-map_test: $(OBS) maptest.o
+map_test: $(OBJS) maptest.o
 	$(CXX) $(LDFLAGS) -o maptest $(OBJS) maptest.o $(LDLIBS)
 
 people_simulator: $(OBJS) main.o

@@ -13,7 +13,6 @@ class IListener
 {
 	public:
 		virtual void RecieveUpdate(const MapEventData &eventData) =0;	
-		virtual MapLocation GetCurrentLocation() const = 0;
 		void AddRegistry(IRegistry* pRegistry) {m_registryToUnregisterFrom.insert(pRegistry);}
 		virtual ~IListener();
 	private:

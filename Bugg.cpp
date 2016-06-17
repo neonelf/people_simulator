@@ -3,6 +3,8 @@
 #include <memory.h>
 #include <stdlib.h>
 
+#include "maptest.h"
+
 const uint64_t FirstByte =  0x00000000000000FF;
 const uint64_t SecondByte = 0x000000000000FF00;
 
@@ -23,20 +25,10 @@ void Bugg::RecieveUpdate(const MapEventData &eventData)
 
 void Bugg::Move(uint8_t Direction)
 {
-	Direction %= 4;
-	printf("Bugg:Move dir: %d", Direction);
-	switch (Direction)
-	{
-		case 1:	m_curLocation.x++;
-			break;
-		case 2: m_curLocation.y++;
-			break;
-		case 3: m_curLocation.x--;
-			break;
-		case 4: m_curLocation.y--;
-			break;
-	}
-
+	Direction %= DIR_MAX;
+	printf("Bugg:Move dir: %d \n", Direction);
+	getGlobalActionManager().Add(new MoveAction((enumDirection)Direction, *this));
+	
 }
 
 uint64_t Bugg::Think()
@@ -44,7 +36,7 @@ uint64_t Bugg::Think()
   uint64_t retvalue;
   ::memcpy(&retvalue, &m_Brain[m_BrainRead], sizeof(retvalue));
   m_BrainRead += sizeof(retvalue);
-	printf("Bugg::Think() returning 0x%lX",retvalue);
+	printf("Bugg::Think() returning 0x%lX\n",retvalue);
   return retvalue;
 }
 
@@ -53,14 +45,16 @@ void Bugg::TakeAction(uint64_t action)
 	const uint8_t Max_action = 2;
 		
 	uint8_t curAction = (action&FirstByte) % Max_action;
-	printf("Bugg::TakeAction() action:%d",curAction);
+	printf("Bugg::TakeAction() action:%d ",curAction);
 	switch (curAction)
 	{
 		case 1:
+			printf("Move \n");
 			Move(0x07&(action>>4));
 			break;
 
 		default:
+			printf("Rest \n");
 		break;
 		//do nothing. Even buggs have to rest
 	}

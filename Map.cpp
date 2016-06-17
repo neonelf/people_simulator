@@ -21,7 +21,7 @@ void GameMap::Draw(Surface& visual)
 	      itr != m_listenerRegistry.end();
 	      ++itr)
 	 {
-	 	visual.DrawAt((*itr)->GetCurrentLocation(), '@');
+	 	//visual.DrawAt((*itr)->GetCurrentLocation(), '@');
 	 }
 }
 

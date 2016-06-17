@@ -1,13 +1,19 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "maptest.h"
 #include "Map.h"
 #include "Bugg.h"
 #include "Surface.h"
 
+static ActionManager s_MyActionManager;
+
+ActionManager& getGlobalActionManager() { return s_MyActionManager; } 
+
+
 int main(int argc, char** argv)
 {
 	srand(100378);
-	Surface DrawPortal(161, 51);
+	
 	GameMap mainMap;
 	Bugg bug1(300);
 	MapLocation a;
@@ -21,11 +27,9 @@ int main(int argc, char** argv)
 
 	for(int i=0; i < 10; ++i)
 	{
-		mainMap.Draw(DrawPortal);
-	
-		DrawPortal.Refresh();
 		bug1.Tick(Timespan::FromMiliseconds(100));
-		getchar();
+
+		s_MyActionManager.ExecuteActions();
 	}
 
 	
