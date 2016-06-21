@@ -1,15 +1,22 @@
 #include <stdio.h>
 #include "ActionManager.h"
+#include "Logger.h"
 
 using namespace std;
 
 void ActionManager::ExecuteActions()
 {
-	printf("ActionManager::ExecuteActions size:%lu\n", m_ActionList.size());
+	stringstream ssMsg;
+	ssMsg << "ActionManager::ExecuteActions size: " <<  m_ActionList.size() << '\n';
+	getGlobalLogger().Log(CHANNEL_TRACE, ssMsg.str());
+
 	for (vector<IAction*>::iterator itr = m_ActionList.begin();
 		 itr != m_ActionList.end(); ++itr)
 	{
-		printf("Exectue : 0x%X\n", (*itr)); 
+		ssMsg.str(std::string()); //clear it out
+		ssMsg << "Exectue Action: " << (*itr)->GetDescription() << '\n'; 
+		getGlobalLogger().Log(CHANNEL_TRACE, ssMsg.str());
+
 		(*itr)->Execute();
 		delete (*itr);
 	}

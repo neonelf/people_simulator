@@ -4,6 +4,7 @@
 #include <stdlib.h>
 
 #include "maptest.h"
+#include "Logger.h"
 
 const uint64_t FirstByte =  0x00000000000000FF;
 const uint64_t SecondByte = 0x000000000000FF00;
@@ -26,7 +27,9 @@ void Bugg::RecieveUpdate(const MapEventData &eventData)
 void Bugg::Move(uint8_t Direction)
 {
 	Direction %= DIR_MAX;
-	printf("Bugg:Move dir: %d \n", Direction);
+	std::stringstream ssMsg; 
+	ssMsg << "Bugg:Move dir: " << (int)Direction << '\n';
+	getGlobalLogger().Log(CHANNEL_TRACE, ssMsg.str());
 	getGlobalActionManager().Add(new MoveAction((enumDirection)Direction, *this));
 	
 }
@@ -34,9 +37,9 @@ void Bugg::Move(uint8_t Direction)
 uint64_t Bugg::Think()
 {
   uint64_t retvalue;
+  if (m_BrainRead > m_Brain.size()) m_BrainRead=0; 
   ::memcpy(&retvalue, &m_Brain[m_BrainRead], sizeof(retvalue));
   m_BrainRead += sizeof(retvalue);
-	printf("Bugg::Think() returning 0x%lX\n",retvalue);
   return retvalue;
 }
 
@@ -45,19 +48,20 @@ void Bugg::TakeAction(uint64_t action)
 	const uint8_t Max_action = 2;
 		
 	uint8_t curAction = (action&FirstByte) % Max_action;
-	printf("Bugg::TakeAction() action:%d ",curAction);
+	std::stringstream ssMsg;
+	ssMsg << "Bugg::TakeAction() action: "<< curAction;
 	switch (curAction)
 	{
 		case 1:
-			printf("Move \n");
+			ssMsg << "Move\n";
 			Move(0x07&(action>>4));
 			break;
-
 		default:
-			printf("Rest \n");
+			ssMsg << "Rest \n";
 		break;
 		//do nothing. Even buggs have to rest
 	}
+	getGlobalLogger().Log(CHANNEL_TRACE, ssMsg.str());
 }
 
 void Bugg::Tick(const Timespan& Delta)

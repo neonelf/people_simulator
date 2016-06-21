@@ -2,8 +2,8 @@ CC=gcc
 CXX=g++
 RM=rm -f
 CPPFLAGS= -std=c++11 
-LDFLAGS=
-LDLIBS=
+LDFLAGS= -L/usr/local/lib/ -lhttp_parser
+LDLIBS= 
 
 SRCS:=$(filter-out main.cpp, $(wildcard *.cpp))
 SRCS:=$(filter-out maptest.cpp, $(SRCS))

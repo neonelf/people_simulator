@@ -4,16 +4,21 @@
 #include "Map.h"
 #include "Bugg.h"
 #include "Surface.h"
+#include "UrlListener.h"
+#include "Logger.h"
 
 static ActionManager s_MyActionManager;
+static Logger s_MyLogger;
 
 ActionManager& getGlobalActionManager() { return s_MyActionManager; } 
-
+Logger& getGlobalLogger() { return s_MyLogger; } 
 
 int main(int argc, char** argv)
 {
 	srand(100378);
-	
+
+	UrlListener server;
+	server.StartListening(7813);
 	GameMap mainMap;
 	Bugg bug1(300);
 	MapLocation a;
@@ -24,9 +29,16 @@ int main(int argc, char** argv)
 	struct MapEventData d;
 	d.m_type = 10;
 	mainMap.MapEvent(d);
-
-	for(int i=0; i < 10; ++i)
+	
+	while (1)
 	{
+		if (server.AcceptAnyNewConnections())
+		{
+			//read new connection?
+			//handle data?
+			//respond to ne request?
+			//close new connection?
+		}
 		bug1.Tick(Timespan::FromMiliseconds(100));
 
 		s_MyActionManager.ExecuteActions();

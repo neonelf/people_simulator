@@ -1,30 +1,32 @@
 
 #include "MoveAction.h"
-
+#include "Logger.h"
 
 void MoveAction::Execute()
 {
 	//move this bastard
 	MapLocation tmpLoc = m_ObjToMove.GetCurrentLocation();
-	printf("MoveAction::Execute ");
+	std::stringstream ssMsg;
+	ssMsg << "MoveAction::Execute ";
 	switch (m_Dir)
 	{
 		case DIR_EAST: tmpLoc.x++;
-		    printf("East\n");
+		    ssMsg << "East\n";
 		break;
 		case DIR_SOUTH: tmpLoc.y++;
-            printf("South\n");
+            ssMsg << "South\n";
         break;
         case DIR_WEST: tmpLoc.x--;
-            printf("West\n");
+            ssMsg << "West\n";
         break;
         case DIR_NORTH: tmpLoc.y--;
-            printf("North\n");
+            ssMsg << "North\n";
         break;
 		default:
-			printf("Unknown dir\n");
+			ssMsg << "Unknown dir\n";
 		break;
 	}
+	getGlobalLogger().Log(CHANNEL_TRACE, ssMsg.str());
 	m_ObjToMove.SetLocation(tmpLoc);
 	
 

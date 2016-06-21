@@ -23,6 +23,7 @@ public:
 	MoveAction(enumDirection Dir, IMovable &Obj):m_Dir(Dir), m_ObjToMove(Obj) {}
     //from IAction
     virtual void Execute();
+	virtual std::string GetDescription() const {return "Move Action";}
 protected:
 	enumDirection m_Dir;
 	IMovable &m_ObjToMove;
